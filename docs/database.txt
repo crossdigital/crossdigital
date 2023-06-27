@@ -1,0 +1,41 @@
+// Put into https://dbdiagram.io/d to see this visually.
+// Note, this is just the initial idea. It will change as we go along.
+
+Table games {
+  id integer [primary key]
+  name varchar
+  state varchar
+  winning_team varchar 
+}
+
+Table cards {
+  id integer [primary key]
+  word_id integer
+  game_id integer
+  colour varchar
+  selected boolean
+}
+
+Table participants {
+  id integer [primary key]
+  game_id integer
+  name varchar
+  role varchar
+  team varchar
+}
+
+Table categories {
+  id integer
+  name varchar
+}
+
+Table words {
+  id integer [primary key]
+  category_id integer
+  name varchar
+}
+
+Ref: participants.game_id > games.id
+Ref: words.category_id > categories.id
+Ref: cards.word_id > words.id
+Ref: cards.game_id > games.id
