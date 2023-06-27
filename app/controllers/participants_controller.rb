@@ -9,6 +9,7 @@ class ParticipantsController < ApplicationController
     @participant = @game.participants.new(participant_params)
 
     if @participant.save
+      session[:participant_id] = @participant.id
       redirect_to game_url(@game), notice: "Participant was successfully created."
     else
       render :new, status: :unprocessable_entity

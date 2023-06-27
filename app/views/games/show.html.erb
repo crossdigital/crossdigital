@@ -1,49 +1,77 @@
+<style>
+  .grid-container{
+    display:grid;
+    gap:25px;
+    grid-template-columns:auto auto auto auto auto;
+    background-color: #F5F5DC;
+    padding: 10px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  }
+  .grid-item{
+    text-align:center;
+  }
+  .red{
+    background-color: #FF0000;
+  }
+  .blue{
+    background-color: #33CCFF;
+  }
+  .black{
+    background-color: #330000;
+  }
+  .white{
+    background-color: #FFFFFF;
+  }
+  .flexy {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: end;
+  }
+</style>
 <p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @game.name %>
-</p>
-
-<p>
-  <strong>State:</strong>
-  <%= @game.state %>
-</p>
-
-<p>
-  <strong>Participants:</strong>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Team</th>
-        <th>Role</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @game.participants.each do |participant| %>
-        <tr>
-          <td><%= participant.name %></td>
-          <td><%= participant.team %></td>
-          <td><%= participant.role %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</p>
-
-<% if @game.state == Game::FINISHED %>
-  <p>
-    <strong>Winning team:</strong>
-    <%= @game.winning_team %>
-  </p>
-<% elsif @game.state == Game::ACTIVE %>
-  SHOW THE BOARD!
-<% elsif @game.state == Game::PARTICIPANTS_FOUND %>
-  <%= button_to 'Start Game', {controller: "games", action: "start", game_id: @game.id, method: :post}  %>
-  <%= link_to 'Add Participant', new_game_participant_path(@game) %>
-<% else %>
-  <%= link_to 'Add Participant', new_game_participant_path(@game) %>
-<% end %>
-
 <%= link_to 'Back to Games', games_path %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Game Name</th>
+      <th>Game State</th>
+      <th>Playing as</th>
+      <th>Team</th>
+      <th>Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= @game.name %></td>
+      <td><%= @game.state %></td>
+      <td><%= @participant&.name %></td>
+      <td><%= @participant&.team %></td>
+      <td><%= @participant&.role %></td>
+    </tr>
+  </tbody>
+</table>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Team</th>
+      <th>Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @game.participants.each do |participant| %>
+      <tr>
+        <td><%= participant.name %></td>
+        <td><%= participant.team %></td>
+        <td><%= participant.role %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= turbo_frame_tag "dsfds" do %>
+<% end %>
+<%= render partial: "game" %>

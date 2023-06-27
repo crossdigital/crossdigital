@@ -1,0 +1,49 @@
+<% if @game.state == Game::FINISHED %>
+  <p>
+    <strong>Winning team:</strong>
+    <%= @game.winning_team %>
+  </p>
+<% elsif @game.state == Game::ACTIVE %>
+  <div>Move: <%= @game.move_role %> <%= @game.move_team %></div>
+  <% if @participant && @game.is_move?(@participant) %><div>YOUR MOVE</div><% end %>
+  <hr>
+  <% if @game.move_role == "spymaster" %>
+    <div class="flexy">
+      <div>Hint: <%= @game.last_hint_text %></div>
+      <div>Number: <%= @game.last_hint_number %></div>
+    </div>
+  <% end %>
+  <div class="grid-container">
+    <% @game.cards.each do |card| %>
+      <div class="grid-item <%= card.colour if card.selected || @participant&.role == "operative" %>">
+        <% if card.selected %>
+          <%= card.word %>
+        <% else %>
+          <%= button_to card.word, {controller: "games", action: "spymaster_move", game_id: @game.id, card_id: card.id, method: :post} %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <%= form_for @game, url: game_operative_move_path(@game) do |form| %>
+    <div class="flexy">
+      <div class="field">
+        <%= form.label :last_hint_text %>
+        <%= form.text_field :last_hint_text, value: nil %>
+      </div>
+
+      <div class="field">
+        <%= form.label :last_hint_number %>
+        <%= form.number_field :last_hint_number, value: nil %>
+      </div>
+
+      <div class="actions">
+        <%= form.submit "Add Hint" %>
+      </div>
+    </div>
+  <% end %>
+<% elsif @game.state == Game::PARTICIPANTS_FOUND %>
+  <%= button_to 'Start Game', {controller: "games", action: "start", game_id: @game.id, method: :post}  %>
+  <% unless @participant.present? %><%= link_to 'Join Game', new_game_participant_path(@game) %><% end %>
+<% else %>
+  <% unless @participant.present? %><%= link_to 'Join Game', new_game_participant_path(@game) %><% end %>
+<% end %>

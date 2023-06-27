@@ -4,7 +4,7 @@ class CreateCards < ActiveRecord::Migration[6.1]
       t.belongs_to :word, null: false, foreign_key: true
       t.belongs_to :game, null: false, foreign_key: true
       t.string :colour
-      t.boolean :selected
+      t.boolean :selected, default: false
 
       t.timestamps
     end

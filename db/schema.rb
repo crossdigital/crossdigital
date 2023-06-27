@@ -10,23 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_27_092616) do
+ActiveRecord::Schema.define(version: 2023_06_27_130815) do
 
   create_table "cards", force: :cascade do |t|
     t.integer "word_id", null: false
     t.integer "game_id", null: false
     t.string "colour"
-    t.boolean "selected"
+    t.boolean "selected", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["game_id"], name: "index_cards_on_game_id"
     t.index ["word_id"], name: "index_cards_on_word_id"
-  end
-
-  create_table "categories", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "games", force: :cascade do |t|
@@ -35,6 +29,10 @@ ActiveRecord::Schema.define(version: 2023_06_27_092616) do
     t.string "winning_team"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "move_team"
+    t.string "move_role"
+    t.string "last_hint_text"
+    t.integer "last_hint_number"
   end
 
   create_table "participants", force: :cascade do |t|
@@ -48,15 +46,12 @@ ActiveRecord::Schema.define(version: 2023_06_27_092616) do
   end
 
   create_table "words", force: :cascade do |t|
-    t.integer "category_id", null: false
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["category_id"], name: "index_words_on_category_id"
   end
 
   add_foreign_key "cards", "games"
   add_foreign_key "cards", "words"
   add_foreign_key "participants", "games"
-  add_foreign_key "words", "categories"
 end
