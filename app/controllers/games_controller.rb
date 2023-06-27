@@ -12,9 +12,6 @@ class GamesController < ApplicationController
     @game = Game.new
   end
 
-  def edit
-  end
-
   def create
     @game = Game.new(game_params)
 
@@ -25,20 +22,10 @@ class GamesController < ApplicationController
     end
   end
 
-  def update
-    if @game.update(game_params)
-      redirect_to game_url(@game), notice: "Game was successfully updated."
-      render :show, status: :ok, location: @game
-    else
-      render :edit, status: :unprocessable_entity
-      render json: @game.errors, status: :unprocessable_entity
-    end
-  end
-
-  def destroy
-    @game.destroy
-
-    redirect_to games_url, notice: "Game was successfully destroyed."
+  def start
+    @game = Game.find(params[:game_id])
+    @game.start
+    redirect_to game_url(@game), notice: "Game was successfully started."
   end
 
   private
