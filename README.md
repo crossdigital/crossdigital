@@ -1,24 +1,5 @@
-# README
+# CrossDigital
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is an incomplete project. For the completed version, please see [Crossdigital Complete](https://github.com/crossdigital/crossdigital_complete)
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+This repo is available only for commit history. Please see the readme from the [Crossdigital Complete](https://github.com/crossdigital/crossdigital_complete) for more information.
